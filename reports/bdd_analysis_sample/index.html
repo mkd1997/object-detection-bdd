@@ -1,0 +1,730 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>BDD100K Train/Val Label Analysis</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --text: #202124;
+      --muted: #5f6368;
+      --border: #dadce0;
+      --surface: #ffffff;
+      --band: #f6f8fa;
+      --accent: #1967d2;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      line-height: 1.45;
+      color: var(--text);
+      background: var(--surface);
+    }
+    header {
+      padding: 32px 40px 24px;
+      border-bottom: 1px solid var(--border);
+      background: var(--band);
+    }
+    main { padding: 24px 40px 48px; }
+    h1 { margin: 0 0 8px; font-size: 30px; }
+    h2 { margin: 0 0 16px; font-size: 22px; }
+    h3 { margin: 24px 0 12px; font-size: 18px; }
+    p { max-width: 1100px; }
+    section {
+      padding: 24px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    img {
+      display: block;
+      max-width: 100%;
+      height: auto;
+      border: 1px solid var(--border);
+      background: white;
+    }
+    .meta {
+      color: var(--muted);
+      margin: 0;
+      overflow-wrap: anywhere;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 12px;
+      max-width: 960px;
+    }
+    .stat {
+      border: 1px solid var(--border);
+      padding: 14px 16px;
+      background: white;
+    }
+    .stat strong {
+      display: block;
+      font-size: 24px;
+      margin-bottom: 4px;
+    }
+    .table-wrap {
+      overflow-x: auto;
+      max-width: 100%;
+    }
+    table.data-table {
+      border-collapse: collapse;
+      width: 100%;
+      font-size: 14px;
+      background: white;
+    }
+    .data-table th,
+    .data-table td {
+      border: 1px solid var(--border);
+      padding: 8px 10px;
+      text-align: right;
+      white-space: nowrap;
+    }
+    .data-table th:first-child,
+    .data-table td:first-child,
+    .data-table th:nth-child(2),
+    .data-table td:nth-child(2) {
+      text-align: left;
+    }
+    .note { color: var(--muted); }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>BDD100K Train/Val Label Analysis</h1>
+    <p class="meta">Train labels: /media/mkd/Manav Desai/Datasets/bdd_dataset/bdd100k_labels_release/bdd100k/labels/bdd100k_labels_images_sample.json</p>
+    <p class="meta">Val labels: /media/mkd/Manav Desai/Datasets/bdd_dataset/bdd100k_labels_release/bdd100k/labels/bdd100k_labels_images_sample.json</p>
+    <p class="meta">Excluded object categories: drivable area, lane</p>
+  </header>
+  <main>
+    <section>
+      <h2>Dataset Summary</h2>
+      <div class="grid">
+        <div class="stat"><strong>2</strong>train images</div>
+        <div class="stat"><strong>2</strong>val images</div>
+        <div class="stat"><strong>38</strong>train retained objects</div>
+        <div class="stat"><strong>38</strong>val retained objects</div>
+      </div>
+      <h3>Split Summary</h3>
+      <div class="table-wrap"><table class="dataframe data-table">
+  <thead>
+    <tr style="text-align: right;">
+      <th>split</th>
+      <th>images</th>
+      <th>objects</th>
+      <th>positive_images_any_retained_object</th>
+      <th>negative_images_no_retained_objects</th>
+      <th>objects_per_image_mean</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>train</td>
+      <td>2</td>
+      <td>38</td>
+      <td>2</td>
+      <td>0</td>
+      <td>19.00</td>
+    </tr>
+    <tr>
+      <td>val</td>
+      <td>2</td>
+      <td>38</td>
+      <td>2</td>
+      <td>0</td>
+      <td>19.00</td>
+    </tr>
+  </tbody>
+</table></div>
+    </section>
+
+    <section><h2>Label category object-count distribution</h2><img src="assets/label_category_object_counts.png" alt="Label category object-count distribution"></section>
+    <section><h2>Images per class</h2><img src="assets/images_per_class.png" alt="Images per class"></section>
+    <section><h2>Objects per image</h2><img src="assets/objects_per_image.png" alt="Objects per image"></section>
+    <section><h2>Average bounding-box area by class</h2><img src="assets/average_bbox_area_by_class.png" alt="Average bounding-box area by class"></section>
+    <section><h2>Bounding-box area distribution</h2><img src="assets/bbox_area_by_class.png" alt="Bounding-box area distribution"></section>
+    <section><h2>Train/val class drift</h2><img src="assets/train_val_class_drift.png" alt="Train/val class drift"></section>
+    <section><h2>Train object center density</h2><img src="assets/train_object_center_density.png" alt="Train object center density"></section>
+    <section><h2>Train object center density by class</h2><img src="assets/train_class_object_center_density.png" alt="Train object center density by class"></section>
+    <section><h2>Val object center density</h2><img src="assets/val_object_center_density.png" alt="Val object center density"></section>
+    <section><h2>Train per-class positive vs negative images</h2><img src="assets/train_positive_negative_images.png" alt="Train per-class positive vs negative images"></section>
+    <section><h2>Val per-class positive vs negative images</h2><img src="assets/val_positive_negative_images.png" alt="Val per-class positive vs negative images"></section>
+
+    <section>
+      <h2>Attribute Distributions By Class</h2>
+      <p class="note">Each heatmap row is normalized within one label category.</p>
+    </section>
+    <section><h2>Train weather condition by class</h2><img src="assets/train_weather-condition_by_category.png" alt="Train weather condition by class"></section><section><h2>Train scene category by class</h2><img src="assets/train_scene-category_by_category.png" alt="Train scene category by class"></section><section><h2>Train time of day by class</h2><img src="assets/train_time-of-day_by_category.png" alt="Train time of day by class"></section><section><h2>Train label occlusion by class</h2><img src="assets/train_label-occlusion_by_category.png" alt="Train label occlusion by class"></section><section><h2>Train label truncation by class</h2><img src="assets/train_label-truncation_by_category.png" alt="Train label truncation by class"></section><section><h2>Train label traffic light color by class</h2><img src="assets/train_label-traffic-light-color_by_category.png" alt="Train label traffic light color by class"></section><section><h2>Val weather condition by class</h2><img src="assets/val_weather-condition_by_category.png" alt="Val weather condition by class"></section><section><h2>Val scene category by class</h2><img src="assets/val_scene-category_by_category.png" alt="Val scene category by class"></section><section><h2>Val time of day by class</h2><img src="assets/val_time-of-day_by_category.png" alt="Val time of day by class"></section><section><h2>Val label occlusion by class</h2><img src="assets/val_label-occlusion_by_category.png" alt="Val label occlusion by class"></section><section><h2>Val label truncation by class</h2><img src="assets/val_label-truncation_by_category.png" alt="Val label truncation by class"></section><section><h2>Val label traffic light color by class</h2><img src="assets/val_label-traffic-light-color_by_category.png" alt="Val label traffic light color by class"></section>
+
+    <section>
+      <h2>Category Comparison Table</h2>
+      <div class="table-wrap"><table class="dataframe data-table">
+  <thead>
+    <tr style="text-align: right;">
+      <th>split</th>
+      <th>label_category</th>
+      <th>object_count</th>
+      <th>positive_images</th>
+      <th>total_objects</th>
+      <th>total_images</th>
+      <th>object_pct</th>
+      <th>positive_image_pct</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>train</td>
+      <td>car</td>
+      <td>21</td>
+      <td>2</td>
+      <td>38</td>
+      <td>2</td>
+      <td>55.26</td>
+      <td>100.00</td>
+    </tr>
+    <tr>
+      <td>train</td>
+      <td>traffic light</td>
+      <td>8</td>
+      <td>2</td>
+      <td>38</td>
+      <td>2</td>
+      <td>21.05</td>
+      <td>100.00</td>
+    </tr>
+    <tr>
+      <td>train</td>
+      <td>traffic sign</td>
+      <td>7</td>
+      <td>2</td>
+      <td>38</td>
+      <td>2</td>
+      <td>18.42</td>
+      <td>100.00</td>
+    </tr>
+    <tr>
+      <td>train</td>
+      <td>motor</td>
+      <td>1</td>
+      <td>1</td>
+      <td>38</td>
+      <td>2</td>
+      <td>2.63</td>
+      <td>50.00</td>
+    </tr>
+    <tr>
+      <td>train</td>
+      <td>rider</td>
+      <td>1</td>
+      <td>1</td>
+      <td>38</td>
+      <td>2</td>
+      <td>2.63</td>
+      <td>50.00</td>
+    </tr>
+    <tr>
+      <td>val</td>
+      <td>car</td>
+      <td>21</td>
+      <td>2</td>
+      <td>38</td>
+      <td>2</td>
+      <td>55.26</td>
+      <td>100.00</td>
+    </tr>
+    <tr>
+      <td>val</td>
+      <td>traffic light</td>
+      <td>8</td>
+      <td>2</td>
+      <td>38</td>
+      <td>2</td>
+      <td>21.05</td>
+      <td>100.00</td>
+    </tr>
+    <tr>
+      <td>val</td>
+      <td>traffic sign</td>
+      <td>7</td>
+      <td>2</td>
+      <td>38</td>
+      <td>2</td>
+      <td>18.42</td>
+      <td>100.00</td>
+    </tr>
+    <tr>
+      <td>val</td>
+      <td>motor</td>
+      <td>1</td>
+      <td>1</td>
+      <td>38</td>
+      <td>2</td>
+      <td>2.63</td>
+      <td>50.00</td>
+    </tr>
+    <tr>
+      <td>val</td>
+      <td>rider</td>
+      <td>1</td>
+      <td>1</td>
+      <td>38</td>
+      <td>2</td>
+      <td>2.63</td>
+      <td>50.00</td>
+    </tr>
+  </tbody>
+</table></div>
+    </section>
+    <section>
+      <h2>Per-Class Positive/Negative Image Counts</h2>
+      <div class="table-wrap"><table class="dataframe data-table">
+  <thead>
+    <tr style="text-align: right;">
+      <th>split</th>
+      <th>label_category</th>
+      <th>positive_images</th>
+      <th>negative_images</th>
+      <th>total_images</th>
+      <th>positive_image_pct</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>train</td>
+      <td>car</td>
+      <td>2</td>
+      <td>0</td>
+      <td>2</td>
+      <td>100.00</td>
+    </tr>
+    <tr>
+      <td>train</td>
+      <td>traffic light</td>
+      <td>2</td>
+      <td>0</td>
+      <td>2</td>
+      <td>100.00</td>
+    </tr>
+    <tr>
+      <td>train</td>
+      <td>traffic sign</td>
+      <td>2</td>
+      <td>0</td>
+      <td>2</td>
+      <td>100.00</td>
+    </tr>
+    <tr>
+      <td>train</td>
+      <td>motor</td>
+      <td>1</td>
+      <td>1</td>
+      <td>2</td>
+      <td>50.00</td>
+    </tr>
+    <tr>
+      <td>train</td>
+      <td>rider</td>
+      <td>1</td>
+      <td>1</td>
+      <td>2</td>
+      <td>50.00</td>
+    </tr>
+    <tr>
+      <td>val</td>
+      <td>car</td>
+      <td>2</td>
+      <td>0</td>
+      <td>2</td>
+      <td>100.00</td>
+    </tr>
+    <tr>
+      <td>val</td>
+      <td>traffic light</td>
+      <td>2</td>
+      <td>0</td>
+      <td>2</td>
+      <td>100.00</td>
+    </tr>
+    <tr>
+      <td>val</td>
+      <td>traffic sign</td>
+      <td>2</td>
+      <td>0</td>
+      <td>2</td>
+      <td>100.00</td>
+    </tr>
+    <tr>
+      <td>val</td>
+      <td>motor</td>
+      <td>1</td>
+      <td>1</td>
+      <td>2</td>
+      <td>50.00</td>
+    </tr>
+    <tr>
+      <td>val</td>
+      <td>rider</td>
+      <td>1</td>
+      <td>1</td>
+      <td>2</td>
+      <td>50.00</td>
+    </tr>
+  </tbody>
+</table></div>
+    </section>
+    <section>
+      <h2>Largest Train/Val Class Drift</h2>
+      <div class="table-wrap"><table class="dataframe data-table">
+  <thead>
+    <tr style="text-align: right;">
+      <th>label_category</th>
+      <th>train_object_pct</th>
+      <th>val_object_pct</th>
+      <th>object_pct_point_diff_val_minus_train</th>
+      <th>train_positive_image_pct</th>
+      <th>val_positive_image_pct</th>
+      <th>image_pct_point_diff_val_minus_train</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>car</td>
+      <td>55.26</td>
+      <td>55.26</td>
+      <td>0.00</td>
+      <td>100.00</td>
+      <td>100.00</td>
+      <td>0.00</td>
+    </tr>
+    <tr>
+      <td>motor</td>
+      <td>2.63</td>
+      <td>2.63</td>
+      <td>0.00</td>
+      <td>50.00</td>
+      <td>50.00</td>
+      <td>0.00</td>
+    </tr>
+    <tr>
+      <td>rider</td>
+      <td>2.63</td>
+      <td>2.63</td>
+      <td>0.00</td>
+      <td>50.00</td>
+      <td>50.00</td>
+      <td>0.00</td>
+    </tr>
+    <tr>
+      <td>traffic light</td>
+      <td>21.05</td>
+      <td>21.05</td>
+      <td>0.00</td>
+      <td>100.00</td>
+      <td>100.00</td>
+      <td>0.00</td>
+    </tr>
+    <tr>
+      <td>traffic sign</td>
+      <td>18.42</td>
+      <td>18.42</td>
+      <td>0.00</td>
+      <td>100.00</td>
+      <td>100.00</td>
+      <td>0.00</td>
+    </tr>
+  </tbody>
+</table></div>
+    </section>
+    <section>
+      <h2>Attribute Imbalance Candidates</h2>
+      <p class="note">Rows with high dominant percentages indicate class coverage concentrated in one condition.</p>
+      <div class="table-wrap"><table class="dataframe data-table">
+  <thead>
+    <tr style="text-align: right;">
+      <th>split</th>
+      <th>label_category</th>
+      <th>attribute</th>
+      <th>dominant_value</th>
+      <th>dominant_count</th>
+      <th>dominant_pct</th>
+      <th>object_count</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>train</td>
+      <td>motor</td>
+      <td>weather_condition</td>
+      <td>overcast</td>
+      <td>1</td>
+      <td>100.00</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>train</td>
+      <td>rider</td>
+      <td>weather_condition</td>
+      <td>overcast</td>
+      <td>1</td>
+      <td>100.00</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>train</td>
+      <td>motor</td>
+      <td>time_of_day</td>
+      <td>daytime</td>
+      <td>1</td>
+      <td>100.00</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>train</td>
+      <td>rider</td>
+      <td>time_of_day</td>
+      <td>daytime</td>
+      <td>1</td>
+      <td>100.00</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>train</td>
+      <td>rider</td>
+      <td>scene_category</td>
+      <td>city street</td>
+      <td>1</td>
+      <td>100.00</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>train</td>
+      <td>motor</td>
+      <td>scene_category</td>
+      <td>city street</td>
+      <td>1</td>
+      <td>100.00</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>val</td>
+      <td>rider</td>
+      <td>scene_category</td>
+      <td>city street</td>
+      <td>1</td>
+      <td>100.00</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>val</td>
+      <td>motor</td>
+      <td>scene_category</td>
+      <td>city street</td>
+      <td>1</td>
+      <td>100.00</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>val</td>
+      <td>rider</td>
+      <td>time_of_day</td>
+      <td>daytime</td>
+      <td>1</td>
+      <td>100.00</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>val</td>
+      <td>motor</td>
+      <td>time_of_day</td>
+      <td>daytime</td>
+      <td>1</td>
+      <td>100.00</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>val</td>
+      <td>motor</td>
+      <td>weather_condition</td>
+      <td>overcast</td>
+      <td>1</td>
+      <td>100.00</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>val</td>
+      <td>rider</td>
+      <td>weather_condition</td>
+      <td>overcast</td>
+      <td>1</td>
+      <td>100.00</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>train</td>
+      <td>car</td>
+      <td>time_of_day</td>
+      <td>daytime</td>
+      <td>19</td>
+      <td>90.48</td>
+      <td>21</td>
+    </tr>
+    <tr>
+      <td>train</td>
+      <td>car</td>
+      <td>weather_condition</td>
+      <td>overcast</td>
+      <td>19</td>
+      <td>90.48</td>
+      <td>21</td>
+    </tr>
+    <tr>
+      <td>val</td>
+      <td>car</td>
+      <td>time_of_day</td>
+      <td>daytime</td>
+      <td>19</td>
+      <td>90.48</td>
+      <td>21</td>
+    </tr>
+    <tr>
+      <td>train</td>
+      <td>car</td>
+      <td>scene_category</td>
+      <td>city street</td>
+      <td>19</td>
+      <td>90.48</td>
+      <td>21</td>
+    </tr>
+    <tr>
+      <td>val</td>
+      <td>car</td>
+      <td>scene_category</td>
+      <td>city street</td>
+      <td>19</td>
+      <td>90.48</td>
+      <td>21</td>
+    </tr>
+    <tr>
+      <td>val</td>
+      <td>car</td>
+      <td>weather_condition</td>
+      <td>overcast</td>
+      <td>19</td>
+      <td>90.48</td>
+      <td>21</td>
+    </tr>
+    <tr>
+      <td>train</td>
+      <td>traffic light</td>
+      <td>weather_condition</td>
+      <td>overcast</td>
+      <td>7</td>
+      <td>87.50</td>
+      <td>8</td>
+    </tr>
+    <tr>
+      <td>val</td>
+      <td>traffic light</td>
+      <td>time_of_day</td>
+      <td>daytime</td>
+      <td>7</td>
+      <td>87.50</td>
+      <td>8</td>
+    </tr>
+    <tr>
+      <td>train</td>
+      <td>traffic light</td>
+      <td>scene_category</td>
+      <td>city street</td>
+      <td>7</td>
+      <td>87.50</td>
+      <td>8</td>
+    </tr>
+    <tr>
+      <td>train</td>
+      <td>traffic light</td>
+      <td>time_of_day</td>
+      <td>daytime</td>
+      <td>7</td>
+      <td>87.50</td>
+      <td>8</td>
+    </tr>
+    <tr>
+      <td>val</td>
+      <td>traffic light</td>
+      <td>weather_condition</td>
+      <td>overcast</td>
+      <td>7</td>
+      <td>87.50</td>
+      <td>8</td>
+    </tr>
+    <tr>
+      <td>val</td>
+      <td>traffic light</td>
+      <td>scene_category</td>
+      <td>city street</td>
+      <td>7</td>
+      <td>87.50</td>
+      <td>8</td>
+    </tr>
+    <tr>
+      <td>train</td>
+      <td>traffic sign</td>
+      <td>scene_category</td>
+      <td>city street</td>
+      <td>6</td>
+      <td>85.71</td>
+      <td>7</td>
+    </tr>
+    <tr>
+      <td>train</td>
+      <td>traffic sign</td>
+      <td>weather_condition</td>
+      <td>overcast</td>
+      <td>6</td>
+      <td>85.71</td>
+      <td>7</td>
+    </tr>
+    <tr>
+      <td>val</td>
+      <td>traffic sign</td>
+      <td>weather_condition</td>
+      <td>overcast</td>
+      <td>6</td>
+      <td>85.71</td>
+      <td>7</td>
+    </tr>
+    <tr>
+      <td>train</td>
+      <td>traffic sign</td>
+      <td>time_of_day</td>
+      <td>daytime</td>
+      <td>6</td>
+      <td>85.71</td>
+      <td>7</td>
+    </tr>
+    <tr>
+      <td>val</td>
+      <td>traffic sign</td>
+      <td>scene_category</td>
+      <td>city street</td>
+      <td>6</td>
+      <td>85.71</td>
+      <td>7</td>
+    </tr>
+    <tr>
+      <td>val</td>
+      <td>traffic sign</td>
+      <td>time_of_day</td>
+      <td>daytime</td>
+      <td>6</td>
+      <td>85.71</td>
+      <td>7</td>
+    </tr>
+  </tbody>
+</table></div>
+    </section>
+  </main>
+</body>
+</html>
