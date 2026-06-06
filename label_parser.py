@@ -106,7 +106,7 @@ class LabelParser:
         return pd.DataFrame(image_rows)
 
 if __name__ == "__main__":
-    label_parser = LabelParser("/media/mkd/Manav Desai/Datasets/bdd_dataset/bdd100k_labels_release/bdd100k/labels/bdd100k_labels_images_train.json", "/media/mkd/Manav Desai/Datasets/bdd_dataset/bdd100k_images_100k/bdd100k/images/100k/train")
-    label_parser.write_to_json("/media/mkd/Manav Desai/Datasets/bdd_dataset/bdd100k_labels_release/bdd100k/labels/bdd100k_labels_images_train_cleaned.json")
-    label_df = label_parser.get_label_df()
-    label_df.to_csv("/media/mkd/Manav Desai/Datasets/bdd_dataset/bdd100k_labels_release/bdd100k/labels/bdd100k_labels_images_train_cleaned.csv", index=False)
+    label_parser = LabelParser("/media/mkd/Manav Desai/Datasets/bdd_dataset/bdd100k_labels_release/bdd100k/labels/bdd100k_labels_images_val.json", "/media/mkd/Manav Desai/Datasets/bdd_dataset/bdd100k_images_100k/bdd100k/images/100k/val")
+    label_parser.write_to_json("/media/mkd/Manav Desai/Datasets/bdd_dataset/bdd100k_labels_release/bdd100k/labels/bdd100k_labels_images_val_cleaned.json")
+    label_df = label_parser.get_object_df()
+    label_df.to_csv("/media/mkd/Manav Desai/Datasets/bdd_dataset/bdd100k_labels_release/bdd100k/labels/bdd100k_labels_images_val_cleaned.csv", index=False)
