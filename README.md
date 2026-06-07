@@ -17,10 +17,7 @@ conda activate bdd
 [label_parser.py](label_parser.py) defines the helper class for generating cleaned labels after removing the `drivable area` and `lane` classes.
 
 ### Setup
-To view the generated report, either open [index.html](reports/bdd_analysis/index.html) in your browser 
-
-**OR**
-
+To view the generated report
 ```
 docker run -d --name report-viewer -p 8080:80 -v ./reports/bdd_analysis:/usr/share/nginx/html:ro nginx:alpine
 ```
